@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Eventos Culturest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .logos {
+            width: 150px;
+            height: 150px;
+        }
+
+        .titulo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0 20px; /* Espacio a los lados */
+        }
+
+        #fecha {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2, h3 {
+            font-size: 28px;
+            margin: 5px 0; /* Espacio arriba y abajo */
+        }
+
+        .conferencia, .expediente {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .resultado, #Registrar {
+            margin-top: 20px; /* Espacio superior */
+            text-align: center;
+        }
+
+        #Registrar input[type="submit"] {
+            padding: 15px 30px;
+            font-size: 24px;
+        }
+
+        .mensaje {
+            font-size: 28px;
+            margin-top: 20px; /* Espacio superior */
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="titulo">
+            <img class="logos" src="/static/img/Escudo_Unison.png" alt="Logo UNISON" />
+            <h1>Registro de Eventos Culturest</h1>
+            <img class="logos" src="/static/img/LOGO_CULTUREST.png" alt="Logo CULTUREST" />
+        </div>
+
+        <div id="fecha"></div>
+
+        <div class="conferencia">
+            <h2>Eventos</h2>
+            <h3>Conferencia sobre conferencias</h3>
+        </div>
+
+        <div class="expediente">
+            <form action="/lista" method="post">
+                <input type="submit" value="Alumnos registrados">
+            </form>
+            
+            <h1>Verificación de Expediente</h1>
+            <form action="/buscar_expediente" method="post">
+                <label for="matricula">Matricula:</label>
+                <input type="text" id="matricula" name="matricula" placeholder="Matricula" required>
+                <input type="submit" value="Buscar">
+            </form>
+
+            <div class="resultado">{{ resultado|safe }}</div>
+
+            {% if alumno_existe %}
+            <div id="Registrar">
+                <form action="/registrar_alumno" method="post">
+                    <input type="hidden" name="matricula" value="{{ matricula }}">
+                    <input type="hidden" name="nombre" value="{{ nombre }}">
+                    <input type="hidden" name="carrera" value="{{ carrera }}">
+                    <input type="hidden" name="correo" value="{{ correo }}">
+                    <input type="submit" value="Registrar Alumno">
+                </form>
+            </div>
+            {% endif %}
+
+            {% if notificacion %}
+                <div class="mensaje">{{ mensaje }}</div>
+            {% endif %}
+        </div>
+
+        <script>
+            // Espera a que se cargue la página antes de ejecutar el script
+            document.addEventListener("DOMContentLoaded", function() {
+                let fechaElement = document.getElementById("fecha");
+                function actualizarFecha() {
+                    let fechaActual = new Date();
+                    let dia = fechaActual.getDate();
+                    let mes = fechaActual.getMonth() + 1;
+                    let anio = fechaActual.getFullYear();
+                    let hora = fechaActual.getHours();
+                    let minutos = fechaActual.getMinutes();
+                    let segundos = fechaActual.getSeconds();
+                    // Formatea la fecha y hora
+                    let textoFecha = `${hora}:${minutos}:${segundos}-${dia}/${mes}/${anio}`;
+                    // Actualiza solo si ha cambiado
+                    if (fechaElement.innerText !== textoFecha) {
+                        fechaElement.innerText = textoFecha;
+                    }
+                }
+                // Actualiza la fecha cada segundo
+                setInterval(actualizarFecha, 1000);
+                // Actualiza la fecha al cargar la página
+                actualizarFecha();
+            });
+        </script>
+    </div>
+</body>
+
+</html>

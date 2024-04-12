@@ -1,0 +1,15 @@
+Matrícula: 216207667
+Nombre: Raul Adib Armenta Loredo
+Carrera: Ingeniería en Sistemas de la Información
+Correo: a216207667@unison.mx
+
+Matrícula: 438572019
+Nombre: Lucía Gómez
+Carrera: Ingeniería en Electrónica
+Correo: a438572019@unison.mx
+
+Matrícula: 471826039
+Nombre: Isabel Flores
+Carrera: Licenciatura en Derecho
+Correo: a471826039@unison.mx
+
